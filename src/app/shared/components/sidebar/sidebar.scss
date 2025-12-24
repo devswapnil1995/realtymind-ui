@@ -1,9 +1,158 @@
+@use '../../../../styles.scss' as *;
+
 .sidebar {
-  width: 220px;
-  background: #111827;
-  color: #fff;
-  padding: 16px;
+  width: 260px;
+  background: linear-gradient(180deg, $bg-dark 0%, $bg-darker 100%);
+  border-right: 1px solid rgba($primary-color, 0.2);
   display: flex;
   flex-direction: column;
+  height: 100vh;
+  position: sticky;
+  top: 56px;
+  overflow-y: auto;
+  box-shadow: $shadow-md;
+
+  &__header {
+    padding: $spacing-lg $spacing-md;
+    border-bottom: 1px solid rgba($primary-color, 0.1);
+  }
+
+  &__title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    color: $text-light;
+    margin: 0;
+  }
+
+  &__nav {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+    padding: $spacing-md;
+  }
+
+  &__footer {
+    padding: $spacing-md;
+    border-top: 1px solid rgba($primary-color, 0.1);
+    text-align: center;
+  }
+
+  &__version {
+    font-size: $font-size-xs;
+    color: #64748b;
+    margin: 0;
+  }
 }
-a { color: #c7d2fe; margin-bottom: 10px; text-decoration: none; }
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  padding: $spacing-sm $spacing-md;
+  color: #cbd5e1;
+  text-decoration: none;
+  border-radius: $radius-lg;
+  transition: all $transition-fast;
+  font-weight: $font-weight-medium;
+  font-size: $font-size-sm;
+
+  .nav-icon {
+    font-size: 18px;
+    min-width: 24px;
+    text-align: center;
+  }
+
+  .nav-label {
+    flex: 1;
+  }
+
+  &:hover {
+    background: rgba($primary-color, 0.1);
+    color: $primary-color;
+    padding-left: calc($spacing-md + 4px);
+  }
+
+  &.active {
+    background: linear-gradient(90deg, $primary-color 0%, rgba($primary-color, 0.5) 100%);
+    color: white;
+    font-weight: $font-weight-semibold;
+    box-shadow: inset 4px 0 0 $primary-color;
+    padding-left: $spacing-md;
+
+    .nav-icon {
+      animation: slideIn 0.3s ease-out;
+    }
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-8px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+// Scrollbar styling
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba($primary-color, 0.3);
+  border-radius: 3px;
+
+  &:hover {
+    background: rgba($primary-color, 0.5);
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .sidebar {
+    width: 220px;
+    top: 50px;
+  }
+
+  .nav-item {
+    padding: $spacing-sm $spacing-sm;
+
+    .nav-label {
+      display: none;
+    }
+
+    &:hover {
+      padding-left: $spacing-sm;
+    }
+
+    &.active {
+      padding-left: $spacing-sm;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-sm) {
+  .sidebar {
+    position: fixed;
+    left: -260px;
+    z-index: 50;
+    transition: left $transition-normal;
+    width: 260px;
+
+    &.open {
+      left: 0;
+    }
+  }
+}
+

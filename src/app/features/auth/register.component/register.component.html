@@ -1,0 +1,170 @@
+<div class="register-container">
+  <div class="register-wrapper">
+    <div class="register-card">
+      <!-- Header Section -->
+      <div class="register-header">
+        <h1 class="register-title">
+          <span class="logo-emoji">🚀</span>
+          Create Account
+        </h1>
+        <p class="register-subtitle">Join RealityMind today</p>
+      </div>
+
+      <!-- Error Message -->
+      @if (error()) {
+        <div class="alert alert-danger">
+          <span class="alert-icon">⚠️</span>
+          <span>{{ error() }}</span>
+        </div>
+      }
+
+      <!-- Success Message -->
+      @if (success()) {
+        <div class="alert alert-success">
+          <span class="alert-icon">✅</span>
+          <span>{{ success() }}</span>
+        </div>
+      }
+
+      <!-- Register Form -->
+      <form (ngSubmit)="register()" class="register-form">
+        <!-- Email Field -->
+        <div class="form-group">
+          <label for="email" class="form-label">Email Address</label>
+          <div class="input-wrapper">
+            <span class="input-icon">📧</span>
+            <input
+              id="email"
+              type="email"
+              [(ngModel)]="email"
+              name="email"
+              placeholder="Enter your email"
+              class="form-input"
+              [disabled]="loading()"
+              required
+            />
+          </div>
+        </div>
+
+        <!-- Role Selection -->
+        <div class="form-group">
+          <label for="role" class="form-label">Account Type</label>
+          <div class="input-wrapper">
+            <span class="input-icon">👤</span>
+            <select
+              id="role"
+              [(ngModel)]="role"
+              name="role"
+              class="form-select"
+              [disabled]="loading()"
+            >
+              <option value="Buyer">🏠 Buyer</option>
+              <option value="Agent">👨‍💼 Real Estate Agent</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Password Field -->
+        <div class="form-group">
+          <label for="password" class="form-label">
+            Password
+            <span class="password-strength" [ngClass]="'strength-' + getPasswordStrength()">
+              {{ getPasswordStrength() }}
+            </span>
+          </label>
+          <div class="input-wrapper">
+            <span class="input-icon">🔒</span>
+            <input
+              id="password"
+              [type]="showPassword() ? 'text' : 'password'"
+              [(ngModel)]="password"
+              name="password"
+              placeholder="Create a strong password"
+              class="form-input"
+              [disabled]="loading()"
+              required
+            />
+            <button
+              type="button"
+              (click)="togglePasswordVisibility()"
+              class="password-toggle"
+              [disabled]="loading()"
+            >
+              {{ showPassword() ? '👁️' : '👁️‍🗨️' }}
+            </button>
+          </div>
+          <p class="password-hint">At least 8 characters with uppercase, lowercase, number, and special character</p>
+        </div>
+
+        <!-- Confirm Password Field -->
+        <div class="form-group">
+          <label for="confirm-password" class="form-label">Confirm Password</label>
+          <div class="input-wrapper">
+            <span class="input-icon">🔐</span>
+            <input
+              id="confirm-password"
+              [type]="showConfirmPassword() ? 'text' : 'password'"
+              [(ngModel)]="confirmPassword"
+              name="confirmPassword"
+              placeholder="Confirm your password"
+              class="form-input"
+              [disabled]="loading()"
+              required
+            />
+            <button
+              type="button"
+              (click)="toggleConfirmPasswordVisibility()"
+              class="password-toggle"
+              [disabled]="loading()"
+            >
+              {{ showConfirmPassword() ? '👁️' : '👁️‍🗨️' }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Terms Checkbox -->
+        <div class="form-group checkbox-group">
+          <label class="checkbox-label">
+            <input
+              type="checkbox"
+              [(ngModel)]="agreedToTerms"
+              name="agreedToTerms"
+              [disabled]="loading()"
+              class="checkbox-input"
+            />
+            <span>
+              I agree to the
+              <a href="#" class="link-highlight">Terms and Conditions</a>
+              and
+              <a href="#" class="link-highlight">Privacy Policy</a>
+            </span>
+          </label>
+        </div>
+
+        <!-- Register Button -->
+        <button
+          type="submit"
+          class="btn-register"
+          [disabled]="loading()"
+        >
+          @if (loading()) {
+            <span class="loader"></span>
+            <span>Creating Account...</span>
+          } @else {
+            <span>✨ Create Account</span>
+          }
+        </button>
+      </form>
+
+      <!-- Login Link -->
+      <p class="login-link">
+        Already have an account?
+        <a routerLink="/login" class="link-highlight">Sign in</a>
+      </p>
+    </div>
+
+    <!-- Decorative Background -->
+    <div class="decoration decoration-1"></div>
+    <div class="decoration decoration-2"></div>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+  <div class="card">
+      <h3>Market Trend – {{ data.locality }}</h3>
+
+      <p><strong>Current Price:</strong> ₹{{ data.currentPrice }}/sqft</p>
+      <p><strong>1Y Growth:</strong> {{ data.growth1YPercent }}%</p>
+      <p><strong>3Y Growth:</strong> {{ data.growth3YPercent }}%</p>
+      <p>
+        <strong>Trend:</strong>
+        <span [style.color]="trendColor">
+          {{ data.trendDirection }}
+        </span>
+      </p>
+    </div>

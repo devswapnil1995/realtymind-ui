@@ -1,0 +1,31 @@
+<div class="mortgage-card">
+  <h3>🏠 Mortgage Calculator</h3>
+
+  <label>
+    Loan Amount (₹)
+    <input type="number"
+           [ngModel]="loanAmount()"
+           (ngModelChange)="loanAmount.set($event)" />
+  </label>
+
+  <label>
+    Interest Rate (%)
+    <input type="number"
+           step="0.1"
+           [ngModel]="interestRate()"
+           (ngModelChange)="interestRate.set($event)" />
+  </label>
+
+  <label>
+    Tenure (Years)
+    <input type="number"
+           [ngModel]="tenureYears()"
+           (ngModelChange)="tenureYears.set($event)" />
+  </label>
+
+  <div class="results">
+    <p><strong>Monthly EMI:</strong> ₹{{ emi() | number:'1.0-0' }}</p>
+    <p><strong>Total Interest:</strong> ₹{{ totalInterest() | number:'1.0-0' }}</p>
+    <p><strong>Total Payable:</strong> ₹{{ totalPayable() | number:'1.0-0' }}</p>
+  </div>
+</div>

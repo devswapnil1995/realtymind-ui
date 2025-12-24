@@ -1,5 +1,27 @@
 <aside class="sidebar">
-  <a routerLink="/dashboard">Dashboard</a>
-  <a routerLink="/search">Search</a>
-  <a routerLink="/market">Market</a>
+  <div class="sidebar__header">
+    <h2 class="sidebar__title">Menu</h2>
+  </div>
+
+  <nav class="sidebar__nav">
+    <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">
+      <span class="nav-icon">📊</span>
+      <span class="nav-label">Dashboard</span>
+    </a>
+
+    <a routerLink="/search" routerLinkActive="active" class="nav-item">
+      <span class="nav-icon">🔍</span>
+      <span class="nav-label">Search Properties</span>
+    </a>
+
+    <a routerLink="/market" routerLinkActive="active" class="nav-item">
+      <span class="nav-icon">📈</span>
+      <span class="nav-label">Market Analysis</span>
+    </a>
+  </nav>
+
+  <div class="sidebar__footer">
+    <p class="sidebar__version">v1.0.0</p>
+  </div>
 </aside>
+

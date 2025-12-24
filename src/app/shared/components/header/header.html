@@ -1,6 +1,22 @@
 <header class="header">
-  <div class="logo">RealityMind</div>
-  <nav>
-    <a routerLink="/dashboard">Dashboard</a>
-  </nav>
+  <div class="header__content container">
+    <div class="header__brand">
+      <h1 class="header__logo">
+        <span class="logo-icon">🏢</span>
+        RealityMind
+      </h1>
+      <p class="header__tagline">Search Smarter. Invest Better.</p>
+    </div>
+
+    <nav class="header__nav">
+      <a routerLink="/dashboard" class="nav-link">
+        <span>📊 Dashboard</span>
+      </a>
+    </nav>
+
+    <button (click)="logout()" class="btn-logout" title="Logout">
+      <span>🚪 Logout</span>
+    </button>
+  </div>
 </header>
+

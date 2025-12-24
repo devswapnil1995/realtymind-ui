@@ -1,0 +1,22 @@
+<ui-error [message]="error()"></ui-error>
+
+<ui-card class="fade-in">
+  <h3>📍 Selected Location</h3>
+  <p>{{ location()?.address }}</p>
+</ui-card>
+
+<ui-card class="fade-in" *ngIf="marketAnalytics(); else marketLoading">
+  <app-market-trend-card [data]="marketAnalytics()"></app-market-trend-card>
+</ui-card>
+
+<ng-template #marketLoading>
+  <ui-skeleton [height]="120"></ui-skeleton>
+</ng-template>
+
+<ui-card class="fade-in">
+  <app-neighborhood-score [data]="score()"></app-neighborhood-score>
+</ui-card>
+
+<ui-card class="fade-in">
+  <app-mortgage-calculator></app-mortgage-calculator>
+</ui-card>

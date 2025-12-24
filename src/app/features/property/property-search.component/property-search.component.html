@@ -1,0 +1,23 @@
+<h2>🏘 Properties Near You</h2>
+
+<ui-error [message]="error()"></ui-error>
+
+<ui-skeleton *ngIf="loading()" [height]="80"></ui-skeleton>
+
+<ui-empty-state
+  *ngIf="!loading() && properties().length === 0"
+  title="No properties found"
+  description="Try another locality">
+</ui-empty-state>
+
+<div class="grid" *ngIf="!loading() && properties().length > 0">
+  <ui-card
+    *ngFor="let p of properties()"
+    class="fade-in"
+    (click)="openDetails(p.id)">
+    
+    <h4>{{ p.title }}</h4>
+    <p>{{ p.address }}</p>
+    <strong>₹{{ p.price | number }}</strong>
+  </ui-card>
+</div>

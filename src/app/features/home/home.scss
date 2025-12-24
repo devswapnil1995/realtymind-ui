@@ -1,0 +1,498 @@
+@use '../../../styles.scss' as *;
+
+.home-container {
+  width: 100%;
+  min-height: 100vh;
+}
+
+// ============================================================
+// HERO SECTION
+// ============================================================
+
+.hero {
+  background: linear-gradient(135deg, rgba($primary-color, 0.1) 0%, rgba($secondary-color, 0.05) 100%);
+  padding: $spacing-2xl 0;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba($primary-color, 0.1), transparent);
+    pointer-events: none;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -10%;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba($secondary-color, 0.1), transparent);
+    pointer-events: none;
+  }
+}
+
+.hero__content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-2xl;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.hero__text {
+  animation: fadeInLeft 0.8s ease-out;
+}
+
+.hero__title {
+  font-size: $font-size-3xl;
+  font-weight: $font-weight-bold;
+  line-height: 1.3;
+  color: $text-dark;
+  margin-bottom: $spacing-lg;
+
+  .highlight {
+    background: linear-gradient(135deg, $primary-color, $secondary-color);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+.hero__description {
+  font-size: $font-size-lg;
+  color: #64748b;
+  margin-bottom: $spacing-xl;
+  line-height: 1.8;
+}
+
+.hero__buttons {
+  display: flex;
+  gap: $spacing-md;
+  flex-wrap: wrap;
+
+  .btn {
+    font-size: $font-size-base;
+    padding: $spacing-md $spacing-2xl;
+
+    &:first-child {
+      animation: slideInUp 0.8s ease-out 0.1s both;
+    }
+
+    &:last-child {
+      animation: slideInUp 0.8s ease-out 0.2s both;
+    }
+  }
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, $primary-color, $primary-dark);
+  color: white;
+  border: none;
+  border-radius: $radius-xl;
+  cursor: pointer;
+  font-weight: $font-weight-semibold;
+  transition: all $transition-normal;
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-sm;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba($primary-color, 0.3);
+  }
+
+  &:active {
+    transform: translateY(-1px);
+  }
+}
+
+.btn-secondary {
+  background: white;
+  color: $primary-color;
+  border: 2px solid $primary-color;
+  border-radius: $radius-xl;
+  cursor: pointer;
+  font-weight: $font-weight-semibold;
+  transition: all $transition-normal;
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-sm;
+
+  &:hover {
+    background: $primary-light;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba($primary-color, 0.2);
+  }
+
+  &:active {
+    transform: translateY(-1px);
+  }
+}
+
+.btn-large {
+  padding: $spacing-lg $spacing-xl;
+  font-size: $font-size-lg;
+}
+
+// Hero Visual Cards
+.hero__visual {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  gap: $spacing-lg;
+  animation: fadeInRight 0.8s ease-out;
+}
+
+.visual-card {
+  background: white;
+  border-radius: $radius-xl;
+  padding: $spacing-lg;
+  display: flex;
+  align-items: center;
+  gap: $spacing-lg;
+  box-shadow: $shadow-md;
+  transition: all $transition-normal;
+  transform: translateX(0);
+
+  &:hover {
+    transform: translateX(8px);
+    box-shadow: $shadow-lg;
+  }
+
+  .card-icon {
+    font-size: 40px;
+    flex-shrink: 0;
+  }
+
+  .card-content {
+    flex: 1;
+
+    h3 {
+      font-size: $font-size-base;
+      color: $text-dark;
+      margin-bottom: $spacing-xs;
+    }
+
+    p {
+      font-size: $font-size-sm;
+      color: #64748b;
+      margin: 0;
+    }
+  }
+
+  &.card-1 {
+    animation: slideInRight 0.8s ease-out 0.1s both;
+    border-left: 4px solid $primary-color;
+  }
+
+  &.card-2 {
+    animation: slideInRight 0.8s ease-out 0.2s both;
+    border-left: 4px solid $secondary-color;
+  }
+
+  &.card-3 {
+    animation: slideInRight 0.8s ease-out 0.3s both;
+    border-left: 4px solid $warning-color;
+  }
+}
+
+// ============================================================
+// FEATURES SECTION
+// ============================================================
+
+.features {
+  padding: $spacing-2xl 0;
+  background: white;
+}
+
+.section-title {
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-bold;
+  text-align: center;
+  margin-bottom: $spacing-2xl;
+  color: $text-dark;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: $spacing-xl;
+}
+
+.feature-card {
+  padding: $spacing-xl;
+  border-radius: $radius-xl;
+  background: linear-gradient(135deg, rgba($primary-color, 0.05), rgba($secondary-color, 0.05));
+  border: 1px solid $border-color;
+  text-align: center;
+  transition: all $transition-normal;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-8px);
+    border-color: $primary-color;
+    box-shadow: 0 15px 40px rgba($primary-color, 0.15);
+  }
+
+  .feature-icon {
+    font-size: 48px;
+    margin-bottom: $spacing-lg;
+    display: block;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  h3 {
+    color: $text-dark;
+    margin-bottom: $spacing-md;
+    font-size: $font-size-lg;
+  }
+
+  p {
+    color: #64748b;
+    font-size: $font-size-sm;
+    line-height: 1.6;
+  }
+}
+
+// ============================================================
+// STATS SECTION
+// ============================================================
+
+.stats {
+  padding: $spacing-2xl 0;
+  background: linear-gradient(135deg, $bg-dark 0%, $bg-darker 100%);
+  color: white;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: $spacing-xl;
+}
+
+.stat-item {
+  text-align: center;
+  padding: $spacing-xl;
+
+  .stat-number {
+    font-size: $font-size-3xl;
+    font-weight: $font-weight-bold;
+    color: $primary-color;
+    margin-bottom: $spacing-sm;
+    animation: countUp 0.8s ease-out;
+  }
+
+  .stat-label {
+    font-size: $font-size-base;
+    color: #cbd5e1;
+    margin: 0;
+  }
+}
+
+// ============================================================
+// CTA SECTION
+// ============================================================
+
+.cta {
+  padding: $spacing-2xl 0;
+  background: linear-gradient(135deg, $primary-color 0%, $primary-dark 100%);
+  color: white;
+}
+
+.cta-content {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: $spacing-xl;
+}
+
+.cta-title {
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-bold;
+  margin-bottom: $spacing-lg;
+}
+
+.cta-description {
+  font-size: $font-size-lg;
+  margin-bottom: $spacing-xl;
+  opacity: 0.95;
+  line-height: 1.6;
+}
+
+// ============================================================
+// ANIMATIONS
+// ============================================================
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes countUp {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// ============================================================
+// RESPONSIVE DESIGN
+// ============================================================
+
+@media (max-width: $breakpoint-lg) {
+  .hero__content {
+    grid-template-columns: 1fr;
+    gap: $spacing-lg;
+  }
+
+  .hero__visual {
+    grid-template-rows: auto;
+    grid-template-columns: 1fr;
+  }
+
+  .hero__title {
+    font-size: $font-size-2xl;
+  }
+
+  .hero__description {
+    font-size: $font-size-base;
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .hero {
+    padding: $spacing-xl 0;
+  }
+
+  .hero__title {
+    font-size: $font-size-xl;
+    margin-bottom: $spacing-md;
+  }
+
+  .hero__buttons {
+    flex-direction: column;
+
+    .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  .section-title {
+    font-size: $font-size-xl;
+    margin-bottom: $spacing-xl;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: $spacing-md;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: $spacing-lg;
+  }
+
+  .cta-title {
+    font-size: $font-size-xl;
+  }
+
+  .cta-description {
+    font-size: $font-size-base;
+  }
+}
+
+@media (max-width: $breakpoint-sm) {
+  .hero {
+    padding: $spacing-lg 0;
+
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+
+  .hero__title {
+    font-size: $font-size-lg;
+  }
+
+  .visual-card {
+    padding: $spacing-md;
+
+    .card-icon {
+      font-size: 32px;
+    }
+
+    .card-content h3 {
+      font-size: $font-size-sm;
+    }
+  }
+
+  .feature-card {
+    padding: $spacing-lg;
+
+    .feature-icon {
+      font-size: 36px;
+    }
+  }
+
+  .stat-item {
+    padding: $spacing-lg;
+
+    .stat-number {
+      font-size: $font-size-xl;
+    }
+  }
+}

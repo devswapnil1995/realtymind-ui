@@ -1,0 +1,56 @@
+<div class="dashboard">
+
+    <!-- Header -->
+    <header class="dashboard-header">
+        <h2>🏡 RealtyMind Dashboard</h2>
+        <p class="subtitle">
+            Smart insights for your selected location
+        </p>
+    </header>
+
+    @if (score()) {
+    <app-neighborhood-score [data]="score()">
+    </app-neighborhood-score>
+    }
+    <!-- Location Summary -->
+    @if (location()) {
+    <section class="card location-card">
+        <h3>📍 Selected Location</h3>
+        <p>{{ location()?.address }}</p>
+    </section>
+    }
+    <!-- Main Grid -->
+    <section class="grid">
+
+        <!-- Market Trend -->
+        @if (trendData()) {
+        <div class="card">
+            <app-market-trend-card [data]="trendData()">
+            </app-market-trend-card>
+        </div>
+        }
+        <!-- Mortgage Calculator -->
+        <div class="card">
+            <app-mortgage-calculator></app-mortgage-calculator>
+        </div>
+
+
+        @if (marketAnalytics()) {
+        <div class="card">
+
+            <h3>📈 Market Analytics</h3>
+
+            <p><strong>Current Price:</strong> ₹{{ marketAnalytics().currentPrice }}/sqft</p>
+            <p><strong>1Y Growth:</strong> {{ marketAnalytics().growth.oneYear }}%</p>
+            <p><strong>3Y Growth:</strong> {{ marketAnalytics().growth.threeYear }}%</p>
+
+            <p>
+                <strong>Vs City Avg:</strong>
+                {{ marketAnalytics().comparisonPercent }}%
+            </p>
+
+        </div>
+        }
+    </section>
+
+</div>

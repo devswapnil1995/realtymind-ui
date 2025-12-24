@@ -1,0 +1,110 @@
+<div class="login-container">
+  <div class="login-wrapper">
+    <div class="login-card">
+      <!-- Header Section -->
+      <div class="login-header">
+        <h1 class="login-title">
+          <span class="logo-emoji">🏢</span>
+          Welcome Back
+        </h1>
+        <p class="login-subtitle">Sign in to RealityMind</p>
+      </div>
+
+      <!-- Error Message -->
+      @if (error()) {
+        <div class="alert alert-danger" role="alert">
+          <span class="alert-icon">⚠️</span>
+          <span>{{ error() }}</span>
+        </div>
+      }
+
+      <!-- Login Form -->
+      <form (ngSubmit)="login()" class="login-form">
+        <!-- Email Field -->
+        <div class="form-group">
+          <label for="email" class="form-label">Email Address</label>
+          <div class="input-wrapper">
+            <span class="input-icon">📧</span>
+            <input
+              id="email"
+              type="email"
+              [(ngModel)]="email"
+              name="email"
+              placeholder="Enter your email"
+              class="form-input"
+              [disabled]="loading()"
+              required
+            />
+          </div>
+        </div>
+
+        <!-- Password Field -->
+        <div class="form-group">
+          <label for="password" class="form-label">Password</label>
+          <div class="input-wrapper">
+            <span class="input-icon">🔒</span>
+            <input
+              id="password"
+              [type]="showPassword() ? 'text' : 'password'"
+              [(ngModel)]="password"
+              name="password"
+              placeholder="Enter your password"
+              class="form-input"
+              [disabled]="loading()"
+              required
+            />
+            <button
+              type="button"
+              (click)="togglePasswordVisibility()"
+              class="password-toggle"
+              [disabled]="loading()"
+            >
+              {{ showPassword() ? '👁️' : '👁️‍🗨️' }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Login Button -->
+        <button
+          type="submit"
+          class="btn-login"
+          [disabled]="loading()"
+        >
+          @if (loading()) {
+            <span class="loader"></span>
+            <span>Logging in...</span>
+          } @else {
+            <span>🚀 Sign In</span>
+          }
+        </button>
+      </form>
+
+      <!-- Divider -->
+      <div class="divider">
+        <span>or</span>
+      </div>
+
+      <!-- Google Login -->
+      <button
+        type="button"
+        (click)="loginWithGoogle()"
+        class="btn-google"
+        [disabled]="loading()"
+      >
+        <span class="google-icon">🔵</span>
+        <span>Continue with Google</span>
+      </button>
+
+      <!-- Register Link -->
+      <p class="register-link">
+        New to RealityMind?
+        <a routerLink="/register" class="link-highlight">Create an account</a>
+      </p>
+    </div>
+
+    <!-- Decorative Background -->
+    <div class="decoration decoration-1"></div>
+    <div class="decoration decoration-2"></div>
+  </div>
+</div>
+

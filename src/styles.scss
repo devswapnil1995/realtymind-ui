@@ -1,1 +1,404 @@
-/* You can add global styles to this file, and also import other style files */
+// ============================================================
+// DESIGN SYSTEM & GLOBAL STYLES
+// ============================================================
+
+// Color Palette
+$primary-color: #3b82f6;
+$primary-dark: #1e40af;
+$primary-light: #dbeafe;
+$secondary-color: #10b981;
+$secondary-dark: #047857;
+$danger-color: #ef4444;
+$warning-color: #f59e0b;
+$success-color: #10b981;
+$bg-dark: #0f172a;
+$bg-darker: #0a0e27;
+$bg-light: #f8fafc;
+$text-dark: #1e293b;
+$text-light: #f1f5f9;
+$border-color: #e2e8f0;
+$shadow-color: rgba(0, 0, 0, 0.1);
+
+// Spacing
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+$spacing-2xl: 48px;
+
+// Typography
+$font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+$font-size-xs: 12px;
+$font-size-sm: 14px;
+$font-size-base: 16px;
+$font-size-lg: 18px;
+$font-size-xl: 20px;
+$font-size-2xl: 24px;
+$font-size-3xl: 30px;
+
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+// Border Radius
+$radius-sm: 4px;
+$radius-md: 6px;
+$radius-lg: 8px;
+$radius-xl: 12px;
+$radius-2xl: 16px;
+
+// Transitions
+$transition-fast: 0.15s ease-in-out;
+$transition-normal: 0.3s ease-in-out;
+$transition-slow: 0.5s ease-in-out;
+
+// Breakpoints
+$breakpoint-sm: 640px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+$breakpoint-xl: 1280px;
+$breakpoint-2xl: 1536px;
+
+// Shadows
+$shadow-sm: 0 1px 2px 0 #{$shadow-color};
+$shadow-md: 0 4px 6px -1px #{$shadow-color};
+$shadow-lg: 0 10px 15px -3px #{$shadow-color};
+$shadow-xl: 0 20px 25px -5px #{$shadow-color};
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin button-base {
+  font-family: $font-family;
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  padding: $spacing-sm $spacing-lg;
+  border: none;
+  border-radius: $radius-lg;
+  cursor: pointer;
+  transition: all $transition-normal;
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: $shadow-lg;
+  }
+}
+
+@mixin form-control {
+  width: 100%;
+  padding: $spacing-sm $spacing-md;
+  font-family: $font-family;
+  font-size: $font-size-base;
+  border: 1px solid $border-color;
+  border-radius: $radius-lg;
+  background: white;
+  color: $text-dark;
+  transition: all $transition-fast;
+
+  &:hover {
+    border-color: $primary-color;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $primary-color;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  &::placeholder {
+    color: #94a3b8;
+  }
+}
+
+// ============================================================
+// RESET & BASE STYLES
+// ============================================================
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  font-family: $font-family;
+  font-size: $font-size-base;
+  line-height: 1.6;
+  color: $text-dark;
+  background: $bg-light;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// ============================================================
+// TYPOGRAPHY
+// ============================================================
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-weight: $font-weight-bold;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: $font-size-3xl;
+}
+
+h2 {
+  font-size: $font-size-2xl;
+}
+
+h3 {
+  font-size: $font-size-xl;
+}
+
+h4 {
+  font-size: $font-size-lg;
+}
+
+h5,
+h6 {
+  font-size: $font-size-base;
+}
+
+p {
+  margin: 0;
+  font-size: $font-size-base;
+  line-height: 1.6;
+}
+
+a {
+  color: $primary-color;
+  text-decoration: none;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $primary-dark;
+    text-decoration: underline;
+  }
+}
+
+// ============================================================
+// FORM ELEMENTS
+// ============================================================
+
+input,
+textarea,
+select {
+  @include form-control;
+}
+
+input[type='checkbox'],
+input[type='radio'] {
+  width: auto;
+  padding: 0;
+  margin-right: $spacing-sm;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+label {
+  display: block;
+  margin-bottom: $spacing-sm;
+  font-weight: $font-weight-medium;
+  font-size: $font-size-sm;
+  color: $text-dark;
+}
+
+// ============================================================
+// BUTTONS
+// ============================================================
+
+button {
+  @include button-base;
+  background: $primary-color;
+  color: white;
+
+  &:hover:not(:disabled) {
+    background: $primary-dark;
+  }
+
+  &.btn-secondary {
+    background: $bg-light;
+    color: $text-dark;
+    border: 1px solid $border-color;
+
+    &:hover:not(:disabled) {
+      background: $border-color;
+    }
+  }
+
+  &.btn-danger {
+    background: $danger-color;
+    color: white;
+
+    &:hover:not(:disabled) {
+      background: #d32f2f;
+    }
+  }
+
+  &.btn-success {
+    background: $success-color;
+    color: white;
+
+    &:hover:not(:disabled) {
+      background: $secondary-dark;
+    }
+  }
+}
+
+// ============================================================
+// UTILITY CLASSES
+// ============================================================
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 $spacing-md;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-muted {
+  color: #64748b;
+}
+
+.text-small {
+  font-size: $font-size-sm;
+}
+
+.mb-1 {
+  margin-bottom: $spacing-sm;
+}
+
+.mb-2 {
+  margin-bottom: $spacing-md;
+}
+
+.mb-3 {
+  margin-bottom: $spacing-lg;
+}
+
+.mt-1 {
+  margin-top: $spacing-sm;
+}
+
+.mt-2 {
+  margin-top: $spacing-md;
+}
+
+.mt-3 {
+  margin-top: $spacing-lg;
+}
+
+.gap-1 {
+  gap: $spacing-sm;
+}
+
+.gap-2 {
+  gap: $spacing-md;
+}
+
+.gap-3 {
+  gap: $spacing-lg;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+// ============================================================
+// RESPONSIVE UTILITIES
+// ============================================================
+
+@media (max-width: $breakpoint-md) {
+  body {
+    font-size: 14px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+}
+
+
+.fade-in {
+  animation: fade .25s ease-in;
+}
+
+@keyframes fade {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
+}
+body {
+  font-family: Inter, system-ui, sans-serif;
+  background: #f4f6f8;
+  margin: 0;
+}
+
+h2, h3, h4 {
+  margin-bottom: 8px;
+}
+
+p {
+  margin: 4px 0;
+}

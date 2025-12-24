@@ -1,0 +1,28 @@
+<div class="card">
+
+  <h3>🏘 Neighborhood Score</h3>
+
+  <p class="overall">
+    Overall Score:
+    <strong>{{ data.overallScore }}</strong>/10
+  </p>
+
+  <!-- Breakdown -->
+  <div class="breakdown">
+    <div *ngFor="let item of data.breakdown | keyvalue">
+      <span>{{ item.key }}</span>
+      <span [style.color]="color(item.value)">
+        {{ item.value }}
+      </span>
+    </div>
+  </div>
+
+  <!-- POI List -->
+  <h4>Nearby Places</h4>
+  <ul>
+    <li *ngFor="let p of data.pois">
+      {{ p.name }} <small>({{ p.type }})</small>
+    </li>
+  </ul>
+
+</div>

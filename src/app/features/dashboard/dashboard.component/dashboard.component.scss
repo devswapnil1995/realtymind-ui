@@ -1,0 +1,35 @@
+.dashboard {
+  padding: 24px;
+  background: #f4f6f8;
+  min-height: 100vh;
+}
+
+.dashboard-header {
+  margin-bottom: 24px;
+
+  h2 {
+    margin: 0;
+  }
+
+  .subtitle {
+    color: #666;
+    margin-top: 4px;
+  }
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.location-card {
+  margin-bottom: 24px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+}

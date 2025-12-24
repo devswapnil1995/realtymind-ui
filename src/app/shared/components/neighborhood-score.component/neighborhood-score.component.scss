@@ -1,0 +1,16 @@
+.card {
+  padding: 16px;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.breakdown {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 12px 0;
+}
+
+.overall {
+  font-size: 18px;
+  margin-bottom: 12px;
+}
