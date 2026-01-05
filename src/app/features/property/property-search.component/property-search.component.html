@@ -2,17 +2,21 @@
 
 <ui-error [message]="error()"></ui-error>
 
-<ui-skeleton *ngIf="loading()" [height]="80"></ui-skeleton>
+@if (loading()) {
+<ui-skeleton [height]="80"></ui-skeleton>
+}
 
+@if (!loading() && properties().length === 0) {
 <ui-empty-state
-  *ngIf="!loading() && properties().length === 0"
   title="No properties found"
   description="Try another locality">
 </ui-empty-state>
+}
 
-<div class="grid" *ngIf="!loading() && properties().length > 0">
+@if (!loading() && properties().length > 0) {
+<div class="grid">
+  @for (p of properties(); track p.id) {
   <ui-card
-    *ngFor="let p of properties()"
     class="fade-in"
     (click)="openDetails(p.id)">
     
@@ -20,4 +24,6 @@
     <p>{{ p.address }}</p>
     <strong>₹{{ p.price | number }}</strong>
   </ui-card>
+  }
 </div>
+}

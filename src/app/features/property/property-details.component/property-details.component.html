@@ -1,8 +1,11 @@
 <ui-error [message]="error()"></ui-error>
 
-<ui-skeleton *ngIf="loading()" [height]="200"></ui-skeleton>
+@if (loading()) {
+<ui-skeleton [height]="200"></ui-skeleton>
+}
 
-<ui-card *ngIf="!loading() && property()" class="fade-in">
+@if (!loading() && property()) {
+<ui-card class="fade-in">
 
   <h2>{{ property().title }}</h2>
   <p>{{ property().address }}</p>
@@ -14,3 +17,4 @@
   <p>{{ property().description }}</p>
 
 </ui-card>
+}

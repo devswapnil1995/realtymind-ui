@@ -9,7 +9,8 @@
         <th>Joined</th>
     </tr>
 
-    <tr *ngFor="let u of users">
+    @for (u of users; track u.id) {
+    <tr>
         <td>{{ u.email }}</td>
 
         <td>
@@ -28,4 +29,5 @@
             </button>
         </td>
     </tr>
+    }
 </table>

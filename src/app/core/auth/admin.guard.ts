@@ -6,7 +6,9 @@ export const adminGuard = () => {
   const auth = inject(AuthService);
   const router = inject(Router);
 
-  if (auth.roleMy() === 'Admin') return true;
+  if (auth.role() === 'Admin') {
+    return true;
+  }
 
   router.navigate(['/']);
   return false;

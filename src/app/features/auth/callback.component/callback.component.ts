@@ -23,7 +23,8 @@ export class OauthCallbackComponent implements OnInit {
       return;
     }
 
-    this.auth.setToken(token);
+    // Store token and navigate to dashboard
+    localStorage.setItem('rm_token', token);
     this.router.navigate(['/dashboard']);
   }
 }

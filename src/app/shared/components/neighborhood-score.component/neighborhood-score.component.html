@@ -9,20 +9,24 @@
 
   <!-- Breakdown -->
   <div class="breakdown">
-    <div *ngFor="let item of data.breakdown | keyvalue">
+    @for (item of data.breakdown | keyvalue; track item.key) {
+    <div>
       <span>{{ item.key }}</span>
       <span [style.color]="color(item.value)">
         {{ item.value }}
       </span>
     </div>
+    }
   </div>
 
   <!-- POI List -->
   <h4>Nearby Places</h4>
   <ul>
-    <li *ngFor="let p of data.pois">
+    @for (p of data.pois; track p.name) {
+    <li>
       {{ p.name }} <small>({{ p.type }})</small>
     </li>
+    }
   </ul>
 
 </div>

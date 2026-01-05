@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { KeyValuePipe } from '@angular/common';
 
 @Component({
   standalone: true,
-  imports: [CommonModule],
+  imports: [KeyValuePipe],
   selector: 'app-neighborhood-score',
   templateUrl: './neighborhood-score.component.html',
   styleUrls: ['./neighborhood-score.component.scss']

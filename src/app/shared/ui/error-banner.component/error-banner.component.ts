@@ -4,9 +4,11 @@ import { Component, Input } from '@angular/core';
   standalone: true,
   selector: 'ui-error',
   template: `
-    <div class="error" *ngIf="message">
+    @if (message) {
+    <div class="error">
       {{ message }}
     </div>
+    }
   `,
   styleUrls: ['./error-banner.component.scss']
 })

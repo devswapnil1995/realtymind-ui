@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { ApiService } from '../../../core/api/api.service';
-import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-admin-users',
-  imports: [DatePipe],
+  imports: [],
   templateUrl: './admin-users.component.html',
   styleUrl: './admin-users.component.scss',
 })
