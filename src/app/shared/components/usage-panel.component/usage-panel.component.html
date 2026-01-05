@@ -1,0 +1,20 @@
+<ui-card>
+    <h3>Today’s Usage</h3>
+
+    <div *ngFor="let u of usage">
+        <p>
+            {{ u.feature }}
+            — {{ u.used }} / {{ u.limit }}
+        </p>
+
+        <progress [value]="u.used" [max]="u.limit">
+        </progress>
+    </div>
+
+    <div *ngIf="isLimitReached">
+        <p class="warn">
+            You’ve reached today’s limit.
+        </p>
+        <a routerLink="/pricing">Upgrade plan</a>
+    </div>
+</ui-card>

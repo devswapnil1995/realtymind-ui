@@ -1,0 +1,31 @@
+<h2>Admin — Users</h2>
+
+<table>
+    <tr>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Plan</th>
+        <th>Active</th>
+        <th>Joined</th>
+    </tr>
+
+    <tr *ngFor="let u of users">
+        <td>{{ u.email }}</td>
+
+        <td>
+            <select [value]="u.role" (change)="changeRole(u, $any($event.target).value)">
+                <option>Buyer</option>
+                <option>Agent</option>
+                <option>Admin</option>
+            </select>
+        </td>
+
+        <td>{{ u.subscriptionPlan }}</td>
+
+        <td>
+            <button (click)="toggleActive(u)">
+                {{ u.isActive ? 'Deactivate' : 'Activate' }}
+            </button>
+        </td>
+    </tr>
+</table>

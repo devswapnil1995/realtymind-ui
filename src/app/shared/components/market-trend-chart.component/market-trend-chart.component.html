@@ -1,13 +1,22 @@
-  <div class="card">
-      <h3>Market Trend – {{ data.locality }}</h3>
+<div class="card">
+  <h3>Market Trend – {{ data.locality }}</h3>
 
-      <p><strong>Current Price:</strong> ₹{{ data.currentPrice }}/sqft</p>
-      <p><strong>1Y Growth:</strong> {{ data.growth1YPercent }}%</p>
-      <p><strong>3Y Growth:</strong> {{ data.growth3YPercent }}%</p>
-      <p>
-        <strong>Trend:</strong>
-        <span [style.color]="trendColor">
-          {{ data.trendDirection }}
-        </span>
-      </p>
-    </div>
+  <p><strong>Current Price:</strong> ₹{{ data.currentPrice }}/sqft</p>
+  <p><strong>1Y Growth:</strong> {{ data.growth1YPercent }}%</p>
+  <p><strong>3Y Growth:</strong> {{ data.growth3YPercent }}%</p>
+  <p>
+    <strong>Trend:</strong>
+    <span [style.color]="trendColor">
+      {{ data.trendDirection }}
+    </span>
+  </p>
+</div>
+
+<ng-container *ngIf="hasPro(auth.subscription())">
+  <app-market-trend-advanced />
+</ng-container>
+
+<ui-card *ngIf="!hasPro(auth.subscription())">
+  <p>Upgrade to Pro to see detailed trends</p>
+  <a routerLink="/pricing">Upgrade</a>
+</ui-card>

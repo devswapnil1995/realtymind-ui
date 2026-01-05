@@ -1,15 +1,27 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs';
 import { environment } from '../../../environment/environment';
+import { UserSubscription } from '../../models/user-subscription';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
     private tokenKey = 'rm_token';
     private userKey = 'rm_user';
-
+    subscription = signal<UserSubscription>({
+        plan: 'Free',
+        isActive: false
+    });
+    roleMy = signal<'Buyer' | 'Agent' | 'Admin'>('Buyer');
+    
     constructor(private http: HttpClient) { }
-
+    loadProfile() {
+        this.http.get<any>(`${environment.apiBaseUrl}/api/me`)
+            .subscribe(u => {
+                this.roleMy.set(u.role);
+                this.subscription.set(u.subscription);
+            });
+    }
     login(email: string, password: string) {
         return this.http.post<any>(`${environment.apiBaseUrl}/api/auth/login`, { email, password })
             .pipe(tap(res => this.setSession(res)));
@@ -62,6 +74,13 @@ export class AuthService {
 
         const payload = JSON.parse(atob(token.split('.')[1]));
         return payload.role;
+    }
+
+
+
+    loadSubscription() {
+        this.http.get<UserSubscription>(`${environment.apiBaseUrl}/api/me/subscription`)
+            .subscribe(s => this.subscription.set(s));
     }
 }
 
