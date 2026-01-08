@@ -1,0 +1,66 @@
+
+    <h2>Admin Analytics</h2>
+
+    <!-- KPI CARDS -->
+    <div class="kpis">
+      <div class="kpi">
+        <h3>{{ kpis?.monthlyActiveUsers }}</h3>
+        <p>MAU</p>
+      </div>
+
+      <div class="kpi">
+        <h3>{{ kpis?.paidUsers }}</h3>
+        <p>Paid Users</p>
+      </div>
+
+      <div class="kpi">
+        <h3>₹{{ kpis?.monthlyRevenue }}</h3>
+        <p>Revenue</p>
+      </div>
+
+      <div class="kpi">
+        <h3>{{ kpis?.monthlyChurnRate }}%</h3>
+        <p>Churn</p>
+      </div>
+    </div>
+
+    <!-- FEATURE ADOPTION -->
+    <h3>Feature Adoption</h3>
+    <table>
+      <tr>
+        <th>Feature</th>
+        <th>Total Requests</th>
+        <th>Paid Usage %</th>
+      </tr>
+      <tr *ngFor="let f of features">
+        <td>{{ f.feature }}</td>
+        <td>{{ f.totalRequests }}</td>
+        <td>{{ f.paidUsagePercentage }}%</td>
+      </tr>
+    </table>
+
+    <!-- PLAN USAGE -->
+    <h3>Usage by Plan</h3>
+    <table>
+      <tr>
+        <th>Plan</th>
+        <th>Total Requests</th>
+      </tr>
+      <tr *ngFor="let p of plans">
+        <td>{{ p.plan }}</td>
+        <td>{{ p.totalRequests }}</td>
+      </tr>
+    </table>
+
+    <!-- TOP USERS -->
+    <h3>Top Users</h3>
+    <table>
+      <tr>
+        <th>Email</th>
+        <th>Total Requests</th>
+      </tr>
+      <tr *ngFor="let u of users">
+        <td>{{ u.email }}</td>
+        <td>{{ u.totalRequests }}</td>
+      </tr>
+    </table>

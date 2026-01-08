@@ -28,7 +28,7 @@ export const routes: Routes = [
   {
     path: '',
     component: PrivateLayoutComponent,
-  
+
     children: [
       {
         path: 'dashboard',
@@ -62,12 +62,18 @@ export const routes: Routes = [
   // Admin routes (heavily protected)
   {
     path: 'admin',
- 
+
     loadComponent: () =>
       import('./features/admin/admin-users.component/admin-users.component')
         .then(m => m.AdminUsersComponent)
   },
-
+  {
+    path: 'admin/analytics',
+    canActivate: [adminGuard],
+    loadComponent: () =>
+      import('./features/admin/admin-analytics.component')
+        .then(m => m.AdminAnalyticsComponent)
+  },
   // Fallback
   { path: '**', redirectTo: 'login' }
 ];
