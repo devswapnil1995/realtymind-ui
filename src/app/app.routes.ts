@@ -9,6 +9,7 @@ import { LoginComponent } from './features/auth/login.component/login.component'
 import { BillingCancelComponent } from './features/billing/billing-cancel.component/billing-cancel.component';
 import { BillingSuccessComponent } from './features/billing/billing-success.component/billing-success.component';
 import { PricingComponent } from './features/billing/pricing.component/pricing.component';
+import { AdminAnalyticsComponent } from './features/admin/admin-analytics.component/admin-analytics.component';
 
 export const routes: Routes = [
   // Public routes with public layout
@@ -70,9 +71,7 @@ export const routes: Routes = [
   {
     path: 'admin/analytics',
     canActivate: [adminGuard],
-    loadComponent: () =>
-      import('./features/admin/admin-analytics.component')
-        .then(m => m.AdminAnalyticsComponent)
+    component: AdminAnalyticsComponent
   },
   // Fallback
   { path: '**', redirectTo: 'login' }
