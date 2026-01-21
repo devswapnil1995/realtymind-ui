@@ -1,33 +1,66 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ApiService } from '../../../core/api/api.service';
+import { SkeletonComponent } from '../../../shared/ui/skeleton.component/skeleton.component';
+import { ErrorBannerComponent } from '../../../shared/ui/error-banner.component/error-banner.component';
 
 @Component({
   standalone: true,
   selector: 'app-admin-analytics',
+  imports: [CommonModule, SkeletonComponent, ErrorBannerComponent],
   templateUrl: './admin-analytics.component.html',
   styleUrls: ['./admin-analytics.component.scss']
 })
 export class AdminAnalyticsComponent implements OnInit {
 
-  kpis: any;
-  features: any[] = [];
-  plans: any[] = [];
-  users: any[] = [];
+  loadingKpis = signal(false);
+  loadingFeatures = signal(false);
+  loadingPlans = signal(false);
+  loadingUsers = signal(false);
+  error = signal('');
+
+  kpis = signal<any>(null);
+  features = signal<any[]>([]);
+  plans = signal<any[]>([]);
+  users = signal<any[]>([]);
   private api = inject(ApiService);
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
+    this.loadingKpis.set(true);
     this.api.get('/api/admin/kpis/snapshot')
-      .subscribe(res => this.kpis = res);
+      .subscribe({
+        next: res => {
+          this.kpis.set(res);
+          console.log('KPI Data:', this.kpis());
+        },
+        error: () => this.error.set('Failed to load KPIs'),
+        complete: () => this.loadingKpis.set(false)
+      });
 
-    this.api.get('/api/admin/analytics/features')
-      .subscribe(res => this.features = res as any[]);
+    this.loadingFeatures.set(true);
+    this.api.get('/api/admin/analytics/usage/features')
+      .subscribe({
+        next: res => { this.features.set(res as any[]); console.log(this.features()); },
+        error: () => this.error.set('Failed to load features'),
+        complete: () => this.loadingFeatures.set(false)
+      });
 
-    this.api.get('/api/admin/analytics/plans')
-      .subscribe(res => this.plans = res as any[]);
+    this.loadingPlans.set(true);
+    this.api.get('/api/admin/analytics/usage/plans')
+      .subscribe({
+        next: res => { this.plans.set(res as any[]); console.log(this.plans()); },
+        error: () => this.error.set('Failed to load plans'),
+        complete: () => this.loadingPlans.set(false)
+      });
 
-    this.api.get('/api/admin/analytics/top-users')
-      .subscribe(res => this.users = res as any[]);
+    this.loadingUsers.set(true);
+    this.api.get('/api/admin/analytics/usage/top-users')
+      .subscribe({
+        next: res => { this.users.set(res as any[]); console.log(this.users()); },
+        error: () => this.error.set('Failed to load users'),
+        complete: () => this.loadingUsers.set(false)
+      });
   }
 }

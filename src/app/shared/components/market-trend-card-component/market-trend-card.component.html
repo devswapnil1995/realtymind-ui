@@ -1,13 +1,17 @@
 <div class="card">
-    <h3>Market Trend – {{ data.locality }}</h3>
+    @if (data) {
+        <h3>Market Trend – {{ data.locality ?? 'Your Area' }}</h3>
 
-    <p><strong>Current Price:</strong> ₹{{ data.currentPrice }}/sqft</p>
-    <p><strong>1Y Growth:</strong> {{ data.growth1YPercent }}%</p>
-    <p><strong>3Y Growth:</strong> {{ data.growth3YPercent }}%</p>
-    <p>
-        <strong>Trend:</strong>
-        <span [style.color]="trendColor">
-            {{ data.trendDirection }}
-        </span>
-    </p>
+        <p><strong>Current Price:</strong> ₹{{ data.currentPrice ?? 'N/A' }}/sqft</p>
+        <p><strong>1Y Growth:</strong> {{ data.growth1YPercent ?? 'N/A' }}%</p>
+        <p><strong>3Y Growth:</strong> {{ data.growth3YPercent ?? 'N/A' }}%</p>
+        <p>
+            <strong>Trend:</strong>
+            <span [style.color]="trendColor">
+                {{ data.trendDirection ?? 'Neutral' }}
+            </span>
+        </p>
+    } @else {
+        <p class="text-gray-500">Loading market data...</p>
+    }
 </div>

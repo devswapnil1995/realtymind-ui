@@ -11,15 +11,30 @@ import { MortgageCalculatorComponent } from '../../../shared/components/mortgage
 import { LocationStateService } from '../../../core/state/location-state.service';
 import { NeighborhoodApi } from '../../../core/api/neighborhood.service';
 import { MarketApi } from '../../../core/api/market.service';
+import { HasFeatureDirective } from '../../../shared/directives/has-feature.directive';
+import { UpgradeCtaComponent } from '../../../shared/components/upgrade-cta.component/upgrade-cta.component';
+import { FeatureService } from '../../../core/services/feature.service';
 
 @Component({
   standalone: true,
-  imports: [CardComponent, SkeletonComponent, ErrorBannerComponent, MarketTrendCardComponent, NeighborhoodScoreComponent, MortgageCalculatorComponent],
+  imports: [
+    CardComponent, 
+    SkeletonComponent, 
+    ErrorBannerComponent, 
+    EmptyStateComponent,
+    MarketTrendCardComponent, 
+    NeighborhoodScoreComponent, 
+    MortgageCalculatorComponent,
+    HasFeatureDirective,
+    UpgradeCtaComponent
+  ],
   templateUrl: './buyer-dashboard.component.html',
   styleUrls: ['./buyer-dashboard.component.scss']
 })
 export class BuyerDashboardComponent implements OnInit {
-
+  loading = signal(false);
+  loadingAnalytics = signal(false);
+  loadingScore = signal(false);
   data = signal<any>(null);
   error = signal('');
   private api = inject(DashboardApi);
@@ -30,6 +45,7 @@ export class BuyerDashboardComponent implements OnInit {
   score = signal<any>(null);
   marketAnalytics = signal<any>(null);
   marketApi = inject(MarketApi);
+  featureService = inject(FeatureService);
 
   constructor() {
     effect(() => {
@@ -39,13 +55,33 @@ export class BuyerDashboardComponent implements OnInit {
       if (!loc) return;
 
       if (loc?.lat !== undefined && loc?.lng !== undefined) {
-        this.neighborhoodApi
-          .getScore(loc.lat, loc.lng)
-          .subscribe(res => this.score.set(res));
+        // Neighborhood score is Pro-only; avoid calling backend when not allowed
+        if (this.featureService.hasFeature('NeighborhoodScore')) {
+          this.loadingScore.set(true);
+          this.neighborhoodApi
+            .getScore(loc.lat, loc.lng)
+            .subscribe({
+              next: res => this.score.set(res),
+              error: () => this.error.set('Failed to load neighborhood score'),
+              complete: () => this.loadingScore.set(false)
+            });
+        } else {
+          this.score.set(null);
+        }
 
-        this.marketApi
-          .getAnalytics(loc.city, loc.locality)
-          .subscribe(res => this.marketAnalytics.set(res));
+        // Price history / advanced analytics are Pro-only; avoid calling backend when not allowed
+        if (this.featureService.hasFeature('PriceHistoryChart')) {
+          this.loadingAnalytics.set(true);
+          this.marketApi
+            .getAnalytics(loc.city, loc.locality)
+            .subscribe({
+              next: res => this.marketAnalytics.set(res),
+              error: () => this.error.set('Failed to load market analytics'),
+              complete: () => this.loadingAnalytics.set(false)
+            });
+        } else {
+          this.marketAnalytics.set(null);
+        }
       }
 
 
@@ -53,7 +89,20 @@ export class BuyerDashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loading.set(true);
     this.api.getBuyerDashboard()
-      .subscribe(res => this.data.set(res));
+      .subscribe({
+        next: res => {
+          this.data.set(res);
+        },
+        error: () => {
+          this.error.set('Unable to load dashboard. Please try again.');
+        },
+        complete: () => this.loading.set(false)
+      });
+  }
+
+  onPlaceSelected(place: any) {
+    console.log('Selected place:', place);
   }
 }

@@ -44,9 +44,25 @@ export class LoginComponent {
 
     this.loading.set(true);
     this.auth.login(emailValue, passwordValue).subscribe({
-      next: () => {
+      next: (res) => {
         this.loading.set(false);
-        this.router.navigate(['/dashboard']);
+        
+        // Navigate to role-specific dashboard
+        const role = res.user?.role || this.auth.role();
+        
+        switch (role) {
+          case 1: // Buyer
+            this.router.navigate(['/dashboard/buyer']);
+            break;
+          case 2: // Agent
+            this.router.navigate(['/dashboard/agent']);
+            break;
+          case 3: // Admin
+            this.router.navigate(['/admin/analytics']);
+            break;
+          default:
+            this.router.navigate(['/dashboard']);
+        }
       },
       error: (err) => {
         this.loading.set(false);

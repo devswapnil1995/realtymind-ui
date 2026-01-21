@@ -1,22 +1,72 @@
 <aside class="sidebar">
   <div class="sidebar__header">
-    <h2 class="sidebar__title">Menu</h2>
+    <h2 class="sidebar__title">Navigation</h2>
+    <p class="sidebar__role">
+      @switch (role) {
+        @case (1) { Buyer }
+        @case (2) { Agent }
+        @case (3) { Admin }
+        @default { User }
+      }
+    </p>
   </div>
 
   <nav class="sidebar__nav">
-    <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">
+    <!-- Common to all roles -->
+    <a [routerLink]="dashboardUrl()" routerLinkActive="active" class="nav-item">
       <span class="nav-icon">📊</span>
       <span class="nav-label">Dashboard</span>
     </a>
 
-    <a routerLink="/search" routerLinkActive="active" class="nav-item">
-      <span class="nav-icon">🔍</span>
-      <span class="nav-label">Search Properties</span>
+    <!-- Buyer-specific -->
+    @if (isBuyer) {
+    <a routerLink="/saved-properties" routerLinkActive="active" class="nav-item">
+      <span class="nav-icon">❤️</span>
+      <span class="nav-label">Saved Properties</span>
     </a>
+    <a routerLink="/alerts" routerLinkActive="active" class="nav-item">
+      <span class="nav-icon">🔔</span>
+      <span class="nav-label">Alerts</span>
+    </a>
+    }
 
-    <a routerLink="/market" routerLinkActive="active" class="nav-item">
+    <!-- Agent-specific -->
+    @if (isAgent) {
+    <a routerLink="/clients" routerLinkActive="active" class="nav-item">
+      <span class="nav-icon">👥</span>
+      <span class="nav-label">My Clients</span>
+    </a>
+    <a routerLink="/listings" routerLinkActive="active" class="nav-item">
+      <span class="nav-icon">🏠</span>
+      <span class="nav-label">Listings</span>
+    </a>
+    <a routerLink="/market-insights" routerLinkActive="active" class="nav-item">
       <span class="nav-icon">📈</span>
-      <span class="nav-label">Market Analysis</span>
+      <span class="nav-label">Market Insights</span>
+    </a>
+    }
+
+    <!-- Admin-specific -->
+    @if (isAdmin) {
+    <a routerLink="/admin/analytics" routerLinkActive="active" class="nav-item">
+      <span class="nav-icon">📊</span>
+      <span class="nav-label">Analytics</span>
+    </a>
+    <a routerLink="/admin/users" routerLinkActive="active" class="nav-item">
+      <span class="nav-icon">👤</span>
+      <span class="nav-label">Users</span>
+    </a>
+    <a routerLink="/admin/settings" routerLinkActive="active" class="nav-item">
+      <span class="nav-icon">⚙️</span>
+      <span class="nav-label">Settings</span>
+    </a>
+    }
+
+    <!-- Common to all -->
+    <hr class="nav-divider" />
+    <a routerLink="/settings" routerLinkActive="active" class="nav-item">
+      <span class="nav-icon">⚙️</span>
+      <span class="nav-label">Account Settings</span>
     </a>
   </nav>
 

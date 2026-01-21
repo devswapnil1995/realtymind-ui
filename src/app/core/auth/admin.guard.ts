@@ -6,10 +6,10 @@ export const adminGuard = () => {
   const auth = inject(AuthService);
   const router = inject(Router);
 
-  if (auth.role() === 'Admin') {
+  if (auth.role() === 3) {
     return true;
   }
 
-  router.navigate(['/']);
+  router.navigate(['/login']);
   return false;
 };

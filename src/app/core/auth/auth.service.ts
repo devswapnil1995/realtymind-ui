@@ -15,7 +15,7 @@ export class AuthService {
         isActive: false
     });
     
-    role = signal<'Buyer' | 'Agent' | 'Admin' | null>(null);
+    role = signal<number | null>(null);
     isAuthenticated = computed(() => !!this.getToken());
     
     constructor(private http: HttpClient) {
@@ -40,7 +40,7 @@ export class AuthService {
     /**
      * Extract role from JWT token with error handling
      */
-    private extractRoleFromToken(token: string): 'Buyer' | 'Agent' | 'Admin' | null {
+    private extractRoleFromToken(token: string): number | null {
         try {
             const payload = JSON.parse(atob(token.split('.')[1]));
             return payload.role || null;
@@ -54,7 +54,7 @@ export class AuthService {
      * Load user profile and subscription from API
      */
     loadProfile() {
-        this.http.get<any>(`${environment.apiBaseUrl}/api/me`)
+        this.http.get<any>(`${environment.apiBaseUrl}/api/auth/me`)
             .subscribe({
                 next: (user) => {
                     this.role.set(user.role);
@@ -74,6 +74,11 @@ export class AuthService {
             .pipe(tap(res => {
                 this.setSession(res);
                 this.role.set(res.user?.role || this.extractRoleFromToken(res.token));
+                
+                // Set subscription if available in response
+                if (res.user?.subscription) {
+                    this.subscription.set(res.user.subscription);
+                }
             }));
     }
 
@@ -85,6 +90,11 @@ export class AuthService {
             .pipe(tap(res => {
                 this.setSession(res);
                 this.role.set(res.user?.role || this.extractRoleFromToken(res.token));
+                
+                // Set subscription if available in response
+                if (res.user?.subscription) {
+                    this.subscription.set(res.user.subscription);
+                }
             }));
     }
 

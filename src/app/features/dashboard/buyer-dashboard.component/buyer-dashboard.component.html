@@ -1,22 +1,82 @@
 <ui-error [message]="error()"></ui-error>
 
-<ui-card class="fade-in">
-  <h3>📍 Selected Location</h3>
-  <p>{{ location()?.address }}</p>
-</ui-card>
-
-@if (marketAnalytics()) {
-<ui-card class="fade-in">
-  <app-market-trend-card [data]="marketAnalytics()"></app-market-trend-card>
-</ui-card>
-} @else {
-  <ui-skeleton [height]="120"></ui-skeleton>
+<!-- Basic Market Trends - Always visible to all buyers (Free plan includes this) -->
+@if (featureService.hasFeature('MarketTrendsBasic')) {
+  @if (loadingAnalytics()) {
+  <ui-card class="fade-in">
+    <ui-skeleton [height]="120"></ui-skeleton>
+  </ui-card>
+  } @else if (marketAnalytics()) {
+  <ui-card class="fade-in">
+    <h3>📊 Market Trends</h3>
+    <app-market-trend-card [data]="marketAnalytics()"></app-market-trend-card>
+  </ui-card>
+  } @else {
+  <ui-card class="fade-in">
+    <ui-empty-state
+      title="No Market Data"
+      description="Try selecting a different location">
+    </ui-empty-state>
+  </ui-card>
+  }
 }
 
+<!-- Upgrade CTA for advanced analytics - only show if Free user (doesn't have PriceHistoryChart) -->
+@if (!featureService.hasFeature('PriceHistoryChart')) {
 <ui-card class="fade-in">
-  <app-neighborhood-score [data]="score()"></app-neighborhood-score>
+  <app-upgrade-cta
+    title="Unlock Advanced Market Analytics"
+    description="Upgrade to Pro to view detailed price history, advanced trends, and market predictions"
+    icon="📈">
+  </app-upgrade-cta>
 </ui-card>
+}
 
+<!-- Neighborhood Score - Pro only -->
+<div *hasFeature="'NeighborhoodScore'">
+  @if (loadingScore()) {
+  <ui-card class="fade-in">
+    <ui-skeleton [height]="120"></ui-skeleton>
+  </ui-card>
+  } @else if (score()) {
+  <ui-card class="fade-in">
+    <app-neighborhood-score [data]="score()"></app-neighborhood-score>
+  </ui-card>
+  } @else {
+  <ui-card class="fade-in">
+    <ui-empty-state
+      title="No Neighborhood Data"
+      description="Try selecting a different location">
+    </ui-empty-state>
+  </ui-card>
+  }
+</div>
+
+<!-- Upgrade CTA for Free users - shown instead of Neighborhood Score -->
+@if (!featureService.hasFeature('NeighborhoodScore')) {
 <ui-card class="fade-in">
-  <app-mortgage-calculator></app-mortgage-calculator>
+  <app-upgrade-cta
+    title="Unlock Neighborhood Insights"
+    description="Get detailed neighborhood scores, POI information, and livability metrics with Pro"
+    icon="🏘️">
+  </app-upgrade-cta>
 </ui-card>
+}
+
+<!-- Mortgage Calculator - Pro only -->
+<div *hasFeature="'MortgageCalculator'">
+  <ui-card class="fade-in">
+    <app-mortgage-calculator></app-mortgage-calculator>
+  </ui-card>
+</div>
+
+<!-- Upgrade CTA for Free users - shown instead of Mortgage Calculator -->
+@if (!featureService.hasFeature('MortgageCalculator')) {
+<ui-card class="fade-in">
+  <app-upgrade-cta
+    title="Unlock Mortgage Calculator"
+    description="Calculate your monthly payments and affordability with advanced mortgage tools"
+    icon="🏦">
+  </app-upgrade-cta>
+</ui-card>
+}

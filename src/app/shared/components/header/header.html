@@ -8,8 +8,22 @@
       <p class="header__tagline">Search Smarter. Invest Better.</p>
     </div>
 
+    <!-- Location Display (Center) -->
+    @if (location()) {
+    <div class="header__location">
+      <span class="location-icon">📍</span>
+      <div class="location-info">
+        <p class="location-label">Current Location</p>
+        <p class="location-value">{{ location()?.locality ? (location()?.locality + ', ' + location()?.city) : location()?.city }}</p>
+      </div>
+      <button (click)="changeLocation()" class="btn-change-location" title="Change Location">
+        ✏️ Change
+      </button>
+    </div>
+    }
+
     <nav class="header__nav">
-      <a routerLink="/dashboard" class="nav-link">
+      <a [routerLink]="dashboardUrl()" class="nav-link">
         <span>📊 Dashboard</span>
       </a>
     </nav>

@@ -1,0 +1,22 @@
+<div class="select-location-container">
+
+    <h1>📍 Select Your Location</h1>
+    <p class="subtitle">
+        Choose a city or locality to view real estate insights.
+    </p>
+
+    <!-- Google Places Autocomplete -->
+    <app-address-autocomplete (placeSelected)="onPlaceSelected($event)">
+    </app-address-autocomplete>
+
+    <!-- Loading -->
+    <div class="loading" *ngIf="loading">
+        Loading location…
+    </div>
+
+    <!-- Error -->
+    <div class="error" *ngIf="error">
+        {{ error }}
+    </div>
+
+</div>

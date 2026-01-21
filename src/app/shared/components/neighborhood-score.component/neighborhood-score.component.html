@@ -2,31 +2,35 @@
 
   <h3>🏘 Neighborhood Score</h3>
 
-  <p class="overall">
-    Overall Score:
-    <strong>{{ data.overallScore }}</strong>/10
-  </p>
+  @if (data) {
+    <p class="overall">
+      Overall Score:
+      <strong>{{ data.overallScore ?? 'N/A' }}</strong>/10
+    </p>
 
-  <!-- Breakdown -->
-  <div class="breakdown">
-    @for (item of data.breakdown | keyvalue; track item.key) {
-    <div>
-      <span>{{ item.key }}</span>
-      <span [style.color]="color(item.value)">
-        {{ item.value }}
-      </span>
+    <!-- Breakdown -->
+    <div class="breakdown">
+      @for (item of data.breakdown | keyvalue; track item.key) {
+      <div>
+        <span>{{ item.key }}</span>
+        <span [style.color]="color(item.value)">
+          {{ item.value }}
+        </span>
+      </div>
+      }
     </div>
-    }
-  </div>
 
-  <!-- POI List -->
-  <h4>Nearby Places</h4>
-  <ul>
-    @for (p of data.pois; track p.name) {
-    <li>
-      {{ p.name }} <small>({{ p.type }})</small>
-    </li>
-    }
-  </ul>
+    <!-- POI List -->
+    <h4>Nearby Places</h4>
+    <ul>
+      @for (p of data.pois; track p.name) {
+      <li>
+        {{ p.name }} <small>({{ p.type }})</small>
+      </li>
+      }
+    </ul>
+  } @else {
+    <p class="text-gray-500">Loading neighborhood information...</p>
+  }
 
 </div>

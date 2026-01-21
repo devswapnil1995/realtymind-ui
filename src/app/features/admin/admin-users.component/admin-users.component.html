@@ -9,7 +9,7 @@
         <th>Joined</th>
     </tr>
 
-    @for (u of users; track u.id) {
+    @for (u of users(); track u.id) {
     <tr>
         <td>{{ u.email }}</td>
 
@@ -24,7 +24,7 @@
         <td>{{ u.subscriptionPlan }}</td>
 
         <td>
-            <button (click)="toggleActive(u)">
+            <button (click)="deactivateUser(u)">
                 {{ u.isActive ? 'Deactivate' : 'Activate' }}
             </button>
         </td>

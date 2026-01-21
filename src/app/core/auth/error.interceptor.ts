@@ -27,8 +27,8 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
             errorMessage = 'Your session has expired. Please log in again.';
             break;
           case 403:
+            // Permission denied - do NOT redirect; let UI handle gated states
             errorMessage = 'You do not have permission to access this resource.';
-            router.navigate(['/']);
             break;
           case 404:
             errorMessage = 'The requested resource was not found.';

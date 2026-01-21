@@ -1,1 +1,57 @@
-<p>agent-dashboard.component works!</p>
+<ui-error [message]="error()"></ui-error>
+
+<!-- Welcome Section -->
+<ui-card class="fade-in agent-welcome">
+  <h2>🏢 Agent Dashboard</h2>
+  <p>Monitor market trends and area insights for your clients.</p>
+</ui-card>
+
+<!-- Location Overview -->
+@if (location()) {
+<ui-card class="fade-in">
+  <h3>📍 Current Area</h3>
+  <p class="location-display">{{ location()?.locality ? (location()?.locality + ', ' + location()?.city) : location()?.city }}</p>
+</ui-card>
+}
+
+<!-- Market Analytics -->
+@if (marketAnalytics()) {
+<ui-card class="fade-in">
+  <app-market-trend-card [data]="marketAnalytics()"></app-market-trend-card>
+</ui-card>
+} @else if (loading()) {
+<ui-skeleton [height]="120"></ui-skeleton>
+} @else {
+<ui-card class="fade-in">
+  <div class="empty-state">
+    <p>📍 Select a location to view market insights</p>
+  </div>
+</ui-card>
+}
+
+<!-- Area Overview - Agent Specific -->
+@if (areaOverview()) {
+<ui-card class="fade-in">
+  <h3>📊 Area Overview</h3>
+  <div class="metrics-grid">
+    <div class="metric">
+      <span class="metric-label">Demand Level</span>
+      <span class="metric-value">{{ areaOverview()?.demand }}</span>
+    </div>
+    <div class="metric">
+      <span class="metric-label">Competition</span>
+      <span class="metric-value">{{ areaOverview()?.competition }}</span>
+    </div>
+    <div class="metric">
+      <span class="metric-label">Avg. Listing Time</span>
+      <span class="metric-value">{{ areaOverview()?.avgListingTime }}</span>
+    </div>
+  </div>
+</ui-card>
+}
+
+<!-- Agent Tools - Placeholder for future features -->
+<ui-card class="fade-in">
+  <h3>🛠️ Agent Tools</h3>
+  <p class="text-gray-500">Client management, listing tools, and analytics coming soon.</p>
+</ui-card>

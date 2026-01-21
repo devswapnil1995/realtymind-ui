@@ -47,6 +47,45 @@
     }
   }
 
+  &__location {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    padding: $spacing-sm $spacing-md;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: $radius-lg;
+    flex: 0 1 auto;
+    min-width: 0;
+
+    .location-icon {
+      font-size: $font-size-lg;
+      flex-shrink: 0;
+    }
+
+    .location-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .location-label {
+      font-size: $font-size-xs;
+      color: #cbd5e1;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .location-value {
+      font-size: $font-size-sm;
+      font-weight: $font-weight-semibold;
+      color: $text-light;
+      margin: 0.25rem 0 0 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
   &__nav {
     display: flex;
     gap: $spacing-lg;
@@ -70,6 +109,27 @@
         text-decoration: none;
       }
     }
+  }
+}
+
+.btn-change-location {
+  @include button-base;
+  background: rgba(255, 255, 255, 0.2);
+  color: $text-light;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: $spacing-xs $spacing-sm;
+  font-size: $font-size-xs;
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-weight: $font-weight-medium;
+
+  &:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.98);
   }
 }
 

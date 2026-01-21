@@ -35,25 +35,6 @@ export class AddressAutocompleteComponent implements AfterViewInit {
         }
       );
 
-      // this.autocomplete.addListener('place_changed', () => {
-      //   const place = this.autocomplete.getPlace();
-      //   if (!place.geometry) return;
-
-      //   const lat = place?.geometry?.location?.lat();
-      //   const lng = place?.geometry?.location?.lng();
-
-      //   if (lat === undefined || lng === undefined) return;
-
-      //   const selected = {
-      //     address: place.formatted_address!,
-      //     lat: lat,
-      //     lng: lng
-      //   };
-
-      //   this.locationState.setLocation(selected);
-      //   this.placeSelected.emit(selected);
-      // });
-
       this.autocomplete.addListener('place_changed', () => {
         debugger;
         const place = this.autocomplete.getPlace();
@@ -78,6 +59,8 @@ export class AddressAutocompleteComponent implements AfterViewInit {
 
         this.locationState.setLocation(selected);
         this.placeSelected.emit(selected);
+
+        console.log('Place selected:', selected);
       });
 
     });
