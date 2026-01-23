@@ -82,6 +82,7 @@ export class AuthService {
         if (payload?.subscription_plan) {
             this.subscription.set({ plan: payload.subscription_plan, isActive: !!payload.is_active });
         }
+        this.setUserFromPayload(payload, normalizedRole);
         return true;
     }
 
@@ -105,6 +106,7 @@ export class AuthService {
         if (payload?.subscription_plan) {
             this.subscription.set({ plan: payload.subscription_plan, isActive: !!payload.is_active });
         }
+        this.setUserFromPayload(payload, normalizedRole);
         return true;
     }
 
@@ -133,6 +135,18 @@ export class AuthService {
             if (!Number.isNaN(parsed)) return parsed;
         }
         return null;
+    }
+
+    /** Persist rm_user from JWT payload when backend does not return user object (e.g., Google login) */
+    private setUserFromPayload(payload: any, normalizedRole: number) {
+        if (!payload) return;
+        const user = {
+            id: payload.sub || null,
+            email: payload.email || null,
+            role: normalizedRole,
+            plan: payload.subscription_plan || this.subscription().plan || 'Free',
+        };
+        localStorage.setItem(this.userKey, JSON.stringify(user));
     }
     
     /**
