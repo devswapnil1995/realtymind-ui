@@ -16,7 +16,12 @@ export class OauthCallbackComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const token = this.route.snapshot.queryParamMap.get('token');
+    // Prefer query param token; fallback to fragment (#token=...) to support backend redirects that avoid raw JSON in browser
+    let token = this.route.snapshot.queryParamMap.get('token');
+    if (!token && this.route.snapshot.fragment) {
+      const params = new URLSearchParams(this.route.snapshot.fragment);
+      token = params.get('token');
+    }
 
     if (!token) {
       this.router.navigate(['/login']);
