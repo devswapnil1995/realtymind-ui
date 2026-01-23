@@ -16,4 +16,8 @@ export class MarketApi extends ApiService {
     `/api/market/trend/analytics?city=${encodeURIComponent(city)}&locality=${encodeURIComponent(locality)}`
   );
 }
+
+  getAustinIndex() {
+    return this.get<any>('/api/market/us/austin/index');
+  }
 }

@@ -1,0 +1,58 @@
+<ui-card>
+  <div class="market-snapshot">
+
+    <header class="snapshot-header">
+      <h3>Market Snapshot</h3>
+      <span class="subtitle">Key Metrics Overview</span>
+    </header>
+
+    <!-- Loading State -->
+    @if (loading()) {
+      <div class="loading-state">
+        <ui-skeleton [height]="200"></ui-skeleton>
+        <p style="text-align: center; color: #999; margin-top: 1rem; font-size: 0.9rem;">Loading market data…</p>
+      </div>
+    }
+
+    <!-- Error State -->
+    @if (!loading() && error()) {
+      <div class="error-state">
+        <p class="error-message">{{ error() }}</p>
+        <p class="error-hint">Unable to load market snapshot</p>
+      </div>
+    }
+
+    <!-- Data Display -->
+    @if (!loading() && !error() && data()) {
+      <div class="kpi-grid">
+        <!-- Median Home Price -->
+        <div class="kpi-card">
+          <span class="kpi-label">Median Home Price</span>
+          <span class="kpi-value">${{ data()?.medianPrice | number:'1.0-0' }}</span>
+          <span class="kpi-hint">Austin Metro Area</span>
+        </div>
+
+        <!-- Median Rent -->
+        <div class="kpi-card">
+          <span class="kpi-label">Median Rent</span>
+          <span class="kpi-value">${{ data()?.medianRent | number:'1.0-0' }}/mo</span>
+          <span class="kpi-hint">Average monthly rent</span>
+        </div>
+
+        <!-- Inventory Months -->
+        <div class="kpi-card">
+          <span class="kpi-label">Months Inventory</span>
+          <span class="kpi-value">{{ data()?.inventoryMonths | number:'1.1-1' }}</span>
+          <span class="kpi-hint">Supply indicator</span>
+        </div>
+      </div>
+
+      <div class="data-note">
+        <span>Source: Austin Metro Market Data</span>
+        <span>Last updated: Market intelligence feeds</span>
+      </div>
+    }
+
+  </div>
+</ui-card>
+

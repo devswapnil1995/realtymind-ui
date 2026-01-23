@@ -1,0 +1,96 @@
+.price-rent-trends {
+  padding: 1.5rem;
+}
+
+.trends-header {
+  margin-bottom: 1.5rem;
+
+  h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.25rem;
+    color: #1a1a1a;
+    font-weight: 600;
+  }
+
+  .subtitle {
+    display: block;
+    font-size: 0.875rem;
+    color: #666;
+    margin-top: 0.25rem;
+  }
+}
+
+.loading-state {
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.error-state {
+  padding: 2rem;
+  background: #fff3e0;
+  border-left: 4px solid #ff9800;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+
+  .error-message {
+    margin: 0 0 0.5rem 0;
+    color: #e65100;
+    font-weight: 500;
+    font-size: 0.95rem;
+  }
+
+  .error-hint {
+    margin: 0;
+    color: #f57c00;
+    font-size: 0.875rem;
+  }
+}
+
+.chart-container {
+  position: relative;
+  height: 340px;
+  margin-bottom: 1rem;
+  background: #f9f9f9;
+  border-radius: 6px;
+  padding: 1rem;
+  width: 100%;
+
+  canvas {
+    max-width: 100% !important;
+    height: 100% !important;
+  }
+}
+
+.data-note {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e0e0e0;
+  font-size: 0.875rem;
+  color: #666;
+
+  span {
+    display: block;
+  }
+
+  span:first-child {
+    font-weight: 500;
+  }
+}
+
+@media (max-width: 768px) {
+  .price-rent-trends {
+    padding: 1rem;
+  }
+
+  .chart-container {
+    height: 280px;
+  }
+
+  .trends-header h3 {
+    font-size: 1.1rem;
+  }
+}

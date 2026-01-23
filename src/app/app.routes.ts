@@ -19,6 +19,7 @@ import { AddressAutocompleteComponent } from './shared/components/address-autoco
 import { SelectLocation } from './shared/components/select-location/select-location';
 import { LocationGuard } from './core/auth/location.guard';
 import { AdminUsersComponent } from './features/admin/admin-users.component/admin-users.component';
+import { AustinDashboardComponent } from './features/market/us/austin/austin-dashboard.component';
 
 export const routes: Routes = [
   // Public routes with public layout
@@ -111,7 +112,11 @@ export const routes: Routes = [
         canActivate: [adminGuard],
         component: AdminAnalyticsComponent
       },
-
+      {
+        path: 'market/austin',
+        component: AustinDashboardComponent,
+        canActivate: [authGuard]
+      },  
     ]
   },
   // Fallback

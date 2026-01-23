@@ -1,0 +1,59 @@
+<ui-card>
+  <div class="comparison-preview">
+
+    <header class="comp-header">
+      <h3>Austin vs Other Markets</h3>
+      <span class="subtitle">Metro-level Median Price Comparison</span>
+    </header>
+
+    <!-- Loading State -->
+    @if (loading()) {
+      <div class="loading-state">
+        <ui-skeleton [height]="200"></ui-skeleton>
+        <p style="text-align: center; color: #999; margin-top: 1rem; font-size: 0.9rem;">Loading market comparison…</p>
+      </div>
+    }
+
+    <!-- Error State -->
+    @if (!loading() && error()) {
+      <div class="error-state">
+        <p class="error-message">{{ error() }}</p>
+        <p class="error-hint">Unable to load market comparison</p>
+      </div>
+    }
+
+    <!-- Comparison Table -->
+    @if (!loading() && !error() && data()) {
+      <div class="content">
+        <table class="preview-table">
+          <thead>
+            <tr>
+              <th>Market</th>
+              <th>Median Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of data()?.comparison; track item.market) {
+              <tr>
+                <td>{{ item.market }}</td>
+                <td>${{ item.medianPrice | number:'1.0-0' }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+
+        @if (data()?.locked) {
+          <div class="locked-banner">
+            🔒 US-wide comparison coming in beta
+          </div>
+        }
+      </div>
+
+      <div class="data-note">
+        <span>Source: Austin Metro Market Data</span>
+        <span>Scope: Metropolitan areas only</span>
+      </div>
+    }
+
+  </div>
+</ui-card>

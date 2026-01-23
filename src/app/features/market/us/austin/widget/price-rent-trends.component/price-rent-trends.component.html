@@ -1,0 +1,39 @@
+<ui-card>
+  <div class="price-rent-trends">
+
+    <header class="trends-header">
+      <h3>Price & Rent Trends</h3>
+      <span class="subtitle">Last 24 months — Austin Metro</span>
+    </header>
+
+    <!-- Loading State -->
+    @if (loading()) {
+      <div class="loading-state">
+        <ui-skeleton [height]="300"></ui-skeleton>
+        <p style="text-align: center; color: #999; margin-top: 1rem; font-size: 0.9rem;">Loading trend data…</p>
+      </div>
+    }
+
+    <!-- Error State -->
+    @if (!loading() && error()) {
+      <div class="error-state">
+        <p class="error-message">{{ error() }}</p>
+        <p class="error-hint">Unable to load trend data. Source: Zillow Home Value Index</p>
+      </div>
+    }
+
+    <!-- Chart -->
+    <div class="chart-container" [style.display]="loading() || error() ? 'none' : 'block'">
+      <canvas #trendChart></canvas>
+    </div>
+    
+    @if (!loading() && !error()) {
+      <div class="data-note">
+        <span>Source: Zillow Home Value Index</span>
+        <span>Data period: Last 24 months (Feb 2024 - Jan 2026)</span>
+      </div>
+    }
+
+  </div>
+</ui-card>
+

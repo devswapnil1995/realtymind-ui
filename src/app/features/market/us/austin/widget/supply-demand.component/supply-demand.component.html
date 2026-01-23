@@ -1,0 +1,54 @@
+<ui-card>
+  <div class="supply-demand">
+
+    <header class="sd-header">
+      <h3>Supply & Demand</h3>
+      <span class="subtitle">Austin Metro Inventory Analysis</span>
+    </header>
+
+    <!-- Loading State -->
+    @if (loading()) {
+      <div class="loading-state">
+        <ui-skeleton [height]="200"></ui-skeleton>
+        <p style="text-align: center; color: #999; margin-top: 1rem; font-size: 0.9rem;">Loading supply data…</p>
+      </div>
+    }
+
+    <!-- Error State -->
+    @if (!loading() && error()) {
+      <div class="error-state">
+        <p class="error-message">{{ error() }}</p>
+        <p class="error-hint">Unable to load supply & demand data</p>
+      </div>
+    }
+
+    <!-- Data Display -->
+    @if (!loading() && !error() && data()) {
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <span class="metric-label">Active Listings</span>
+          <span class="metric-value">{{ data()?.activeListings | number:'1.0-0' }}</span>
+          <span class="metric-hint">Total available properties</span>
+        </div>
+
+        <div class="metric-card">
+          <span class="metric-label">Avg Days on Market</span>
+          <span class="metric-value">{{ data()?.avgDaysOnMarket ?? 'N/A' }} days</span>
+          <span class="metric-hint">Time to sell</span>
+        </div>
+
+        <div class="metric-card">
+          <span class="metric-label">Listings per Agent</span>
+          <span class="metric-value">{{ data()?.listingsPerActiveAgent | number:'1.1-1' }}</span>
+          <span class="metric-hint">Market competition</span>
+        </div>
+      </div>
+
+      <div class="data-note">
+        <span>Source: Austin Metro Market Data</span>
+        <span>Supply Trend: {{ data()?.supplyTrend ?? 'Stable' }}</span>
+      </div>
+    }
+
+  </div>
+</ui-card>

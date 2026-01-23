@@ -1,0 +1,90 @@
+.market-snapshot {
+  padding: 16px;
+  background: #ffffff;
+  border-radius: 8px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+
+  h2 {
+    margin: 0;
+  }
+
+  .status {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+
+    &.hot {
+      background: #ffe5e5;
+      color: #c62828;
+    }
+
+    &.stable {
+      background: #e3f2fd;
+      color: #1565c0;
+    }
+
+    &.cooling {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+  }
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.kpi-card {
+  padding: 12px;
+  border: 1px solid #eee;
+  border-radius: 6px;
+
+  .label {
+    font-size: 12px;
+    color: #777;
+  }
+
+  .value {
+    display: block;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 6px 0;
+  }
+
+  .delta {
+    font-size: 13px;
+
+    &.positive {
+      color: #2e7d32;
+    }
+
+    &.negative {
+      color: #c62828;
+    }
+  }
+}
+
+.updated {
+  margin-top: 12px;
+  font-size: 12px;
+  color: #888;
+}
+
+.skeleton {
+  padding: 20px;
+  color: #aaa;
+}
+
+.error {
+  padding: 12px;
+  color: #c62828;
+}

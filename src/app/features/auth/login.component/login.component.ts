@@ -52,7 +52,7 @@ export class LoginComponent {
         
         switch (role) {
           case 1: // Buyer
-            this.router.navigate(['/dashboard/buyer']);
+            this.router.navigate(['/market/austin']);
             break;
           case 2: // Agent
             this.router.navigate(['/dashboard/agent']);

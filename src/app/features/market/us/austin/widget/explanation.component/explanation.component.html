@@ -1,0 +1,49 @@
+<ui-card>
+  <div class="explanation">
+
+    <header class="exp-header">
+      <h3>Why Austin?</h3>
+      <span class="subtitle">Market Context & Key Drivers</span>
+    </header>
+
+    <!-- Loading State -->
+    @if (loading()) {
+      <div class="loading-state">
+        <ui-skeleton [height]="250"></ui-skeleton>
+        <p style="text-align: center; color: #999; margin-top: 1rem; font-size: 0.9rem;">Loading market explanation…</p>
+      </div>
+    }
+
+    <!-- Error State -->
+    @if (!loading() && error()) {
+      <div class="error-state">
+        <p class="error-message">{{ error() }}</p>
+        <p class="error-hint">Unable to load market explanation</p>
+      </div>
+    }
+
+    <!-- Content State -->
+    @if (!loading() && !error() && data()) {
+      <div class="content">
+        
+        <p class="summary">
+          {{ data()?.summary ?? 'No summary available' }}
+        </p>
+
+        <h4 class="facts-title">Key Market Drivers</h4>
+        <ul class="facts">
+          @for (fact of data()?.facts ?? []; track $index) {
+            <li>{{ fact }}</li>
+          }
+        </ul>
+
+        <div class="data-note">
+          <span>Last updated: {{ data()?.lastUpdated | date:'medium' }}</span>
+          <span>Source: Austin Metro Market Data</span>
+        </div>
+
+      </div>
+    }
+
+  </div>
+</ui-card>

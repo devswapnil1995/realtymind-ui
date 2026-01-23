@@ -1,0 +1,52 @@
+<ui-card>
+  <div class="market-heat-index">
+
+    <header class="heat-header">
+      <h3>Market Heat Index</h3>
+      <span class="subtitle">Austin Metro Activity Level</span>
+    </header>
+
+    <!-- Loading State -->
+    @if (loading()) {
+      <div class="loading-state">
+        <ui-skeleton [height]="240"></ui-skeleton>
+        <p style="text-align: center; color: #999; margin-top: 1rem; font-size: 0.9rem;">Loading heat index…</p>
+      </div>
+    }
+
+    <!-- Error State -->
+    @if (!loading() && error()) {
+      <div class="error-state">
+        <p class="error-message">{{ error() }}</p>
+        <p class="error-hint">Unable to load market heat index</p>
+      </div>
+    }
+
+    <!-- Heat Index Gauge -->
+    @if (!loading() && !error() && heatIndex()) {
+      <div class="content">
+        <div class="gauge-wrapper">
+          <div class="gauge">
+            <div class="arc"></div>
+            <div class="needle" [style.transform]="rotation()"></div>
+            <div class="center-dot"></div>
+          </div>
+        </div>
+
+        <div class="info">
+          <div class="score">{{ heatIndex()?.score ?? 0 }}/100</div>
+          <div class="label">{{ heatIndex()?.label ?? 'Moderate Activity' }}</div>
+          @if (heatIndex()?.description) {
+            <div class="description">{{ heatIndex().description }}</div>
+          }
+        </div>
+      </div>
+
+      <div class="data-note">
+        <span>Source: Austin Metro Market Data</span>
+        <span>Updated: Based on recent listings and activity</span>
+      </div>
+    }
+
+  </div>
+</ui-card>
