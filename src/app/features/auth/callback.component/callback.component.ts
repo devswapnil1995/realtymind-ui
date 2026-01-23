@@ -24,16 +24,28 @@ export class OauthCallbackComponent implements OnInit {
     }
 
     if (!token) {
+      console.error('OAuth callback: no token in URL');
       this.router.navigate(['/login']);
       return;
     }
 
+    // Token may be URL-encoded from backend redirect
+    try {
+      token = decodeURIComponent(token);
+    } catch (e) {
+      console.warn('Failed to URL-decode token, using as-is');
+    }
+
+    console.log('OAuth callback: received token, validating...');
     const valid = this.auth.setTokenFromJwt(token) && this.auth.setUserFromToken();
 
     if (!valid) {
+      console.error('OAuth callback: token validation failed');
       this.router.navigate(['/login'], { queryParams: { error: 'invalid_token' } });
       return;
     }
+
+    console.log('OAuth callback: token valid, routing user...');
 
     const role = this.auth.role();
 

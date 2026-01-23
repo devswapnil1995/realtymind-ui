@@ -54,33 +54,40 @@ export class AuthService {
      */
     setTokenFromJwt(token: string): boolean {
         const payload = this.decodeJwt(token);
-        if (!payload) return false;
+        if (!payload) {
+            console.error('setTokenFromJwt: failed to decode JWT');
+            return false;
+        }
+
+        console.log('setTokenFromJwt: payload claims:', Object.keys(payload));
 
         // Required claims: role must exist; optionally ensure not expired
-        if (!payload.role) {
-            console.warn('JWT missing required claim: role');
+        const roleClaim = this.getRoleFromPayload(payload);
+        if (!roleClaim) {
+            console.error('setTokenFromJwt: role claim missing or not in expected format', { payload: { role: payload.role, roles: payload.roles } });
             return false;
         }
 
         if (payload.exp && Date.now() / 1000 > payload.exp) {
-            console.warn('JWT expired');
+            console.warn('JWT expired', { exp: payload.exp, now: Date.now() / 1000 });
+            return false;
+        }
+
+        const normalizedRole = this.normalizeRole(roleClaim);
+        if (!normalizedRole) {
+            console.error('setTokenFromJwt: failed to normalize role', { roleClaim });
             return false;
         }
 
         localStorage.setItem(this.tokenKey, token);
         this.token.set(token);
-
-        const roleClaim = this.getRoleFromPayload(payload);
-        const normalizedRole = this.normalizeRole(roleClaim);
-        if (!normalizedRole) {
-            console.warn('JWT missing usable role claim', payload);
-            return false;
-        }
         this.role.set(normalizedRole);
+        console.log('setTokenFromJwt: success', { normalizedRole });
 
-        // map subscription from claim if present
+        // map subscription from claim if present; handle is_active as string or boolean
         if (payload?.subscription_plan) {
-            this.subscription.set({ plan: payload.subscription_plan, isActive: !!payload.is_active });
+            const isActive = payload.is_active === 'true' || payload.is_active === true;
+            this.subscription.set({ plan: payload.subscription_plan, isActive });
         }
         this.setUserFromPayload(payload, normalizedRole);
         return true;
@@ -104,7 +111,8 @@ export class AuthService {
         this.role.set(normalizedRole);
 
         if (payload?.subscription_plan) {
-            this.subscription.set({ plan: payload.subscription_plan, isActive: !!payload.is_active });
+            const isActive = payload.is_active === 'true' || payload.is_active === true;
+            this.subscription.set({ plan: payload.subscription_plan, isActive });
         }
         this.setUserFromPayload(payload, normalizedRole);
         return true;
@@ -132,8 +140,9 @@ export class AuthService {
             if (lower.includes('agent')) return 2;
             if (lower.includes('admin')) return 3;
             const parsed = Number(roleClaim);
-            if (!Number.isNaN(parsed)) return parsed;
+            if (!Number.isNaN(parsed) && parsed > 0) return parsed;
         }
+        console.warn('normalizeRole: unrecognized role format', { roleClaim, type: typeof roleClaim });
         return null;
     }
 
