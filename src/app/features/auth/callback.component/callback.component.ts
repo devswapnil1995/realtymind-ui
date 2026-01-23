@@ -23,8 +23,19 @@ export class OauthCallbackComponent implements OnInit {
       return;
     }
 
-    // Store token and navigate to dashboard
-    localStorage.setItem('rm_token', token);
-    this.router.navigate(['/dashboard']);
+    const valid = this.auth.setTokenFromJwt(token) && this.auth.setUserFromToken();
+
+    if (!valid) {
+      this.router.navigate(['/login'], { queryParams: { error: 'invalid_token' } });
+      return;
+    }
+
+    const role = this.auth.role();
+
+    if (role === 3) {
+      this.router.navigate(['/dashboard/admin']);
+    } else {
+      this.router.navigate(['/select-location']);
+    }
   }
 }
